@@ -1,4 +1,4 @@
-package coupon.coupon.coupon.dto.common;
+package coupon.coupon.global.exception;
 
 import lombok.Getter;
 import lombok.ToString;
