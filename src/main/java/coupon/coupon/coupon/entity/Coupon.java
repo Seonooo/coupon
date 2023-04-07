@@ -2,6 +2,7 @@ package coupon.coupon.coupon.entity;
 
 import coupon.coupon.coupon.dto.coupon.CouponRequestDto;
 import coupon.coupon.coupon.dto.coupon.CouponResponseDto;
+import coupon.coupon.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,13 +15,14 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Coupon {
+public class Coupon extends BaseTimeEntity {
 
     @Id
     private String couponCode;
     private String couponName;
     private Integer quantity;
     private Integer discount;
+    private String deleteYn;
     private LocalDateTime startDateUse;
     private LocalDateTime deadlineUse;
 
@@ -48,6 +50,10 @@ public class Coupon {
     public void update(CouponRequestDto requestDto) {
         this.quantity = requestDto.getQuantity();
         this.couponName = requestDto.getCouponName();
+    }
+
+    public void delete() {
+        this.deleteYn = "Y";
     }
 
 }

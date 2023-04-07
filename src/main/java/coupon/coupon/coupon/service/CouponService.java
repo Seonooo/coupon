@@ -53,7 +53,7 @@ public class CouponService {
     @Transactional
     public void removeCoupon(String couponCode) {
         Coupon coupon = getCouponEntity(couponCode);
-        couponRepository.delete(coupon);
+        coupon.delete();
     }
 
     private Coupon getCouponEntity(String couponCode) {
