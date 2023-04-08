@@ -7,6 +7,9 @@ import coupon.coupon.coupon.exception.CouponErrorCode;
 import coupon.coupon.coupon.exception.CouponException;
 import coupon.coupon.coupon.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,13 @@ import java.util.stream.Collectors;
 public class CouponService {
 
     private final CouponRepository couponRepository;
+
+    public Page<CouponResponseDto> getAllCouponsPage(String couponCode, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return couponRepository
+                .getAllCouponsPage(couponCode, pageable)
+                .map(Coupon::toResponse);
+    }
 
     public List<CouponResponseDto> getAllCoupons(String codeType) {
         if ("kor".equals(codeType)) {

@@ -2,6 +2,7 @@ package coupon.coupon.coupon.entity;
 
 import coupon.coupon.coupon.dto.coupon.CouponRequestDto;
 import coupon.coupon.coupon.dto.coupon.CouponResponseDto;
+import coupon.coupon.coupon.dto.coupon.type.CouponStatus;
 import coupon.coupon.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class Coupon extends BaseTimeEntity {
     private String couponName;
     private Integer quantity;
     private Integer discount;
-    private String deleteYn;
+    private CouponStatus couponStatus;
     private LocalDateTime startDateUse;
     private LocalDateTime deadlineUse;
 
@@ -32,6 +33,7 @@ public class Coupon extends BaseTimeEntity {
         this.couponName = couponName;
         this.quantity = quantity;
         this.discount = discount;
+        this.couponStatus = CouponStatus.UNUSED;
         this.startDateUse = startDateUse;
         this.deadlineUse = deadlineUse;
     }
@@ -50,10 +52,11 @@ public class Coupon extends BaseTimeEntity {
     public void update(CouponRequestDto requestDto) {
         this.quantity = requestDto.getQuantity();
         this.couponName = requestDto.getCouponName();
+        this.couponStatus = CouponStatus.USED;
     }
 
     public void delete() {
-        this.deleteYn = "Y";
+        this.couponStatus = CouponStatus.DELETE;
     }
 
 }
