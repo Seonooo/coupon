@@ -1,5 +1,6 @@
 package coupon.coupon.coupon.service;
 
+import coupon.coupon.coupon.dto.coupon.CouponFindDto;
 import coupon.coupon.coupon.dto.coupon.CouponRequestDto;
 import coupon.coupon.coupon.dto.coupon.CouponResponseDto;
 import coupon.coupon.coupon.entity.Coupon;
@@ -23,10 +24,10 @@ public class CouponService {
 
     private final CouponRepository couponRepository;
 
-    public Page<CouponResponseDto> getAllCouponsPage(String couponCode, Integer page, Integer size) {
+    public Page<CouponResponseDto> getAllCouponsPage(CouponFindDto couponFindDto, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return couponRepository
-                .getAllCouponsPage(couponCode, pageable)
+                .getAllCouponsPage(couponFindDto, pageable)
                 .map(Coupon::toResponse);
     }
 

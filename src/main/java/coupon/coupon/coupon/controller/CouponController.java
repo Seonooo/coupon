@@ -1,9 +1,13 @@
 package coupon.coupon.coupon.controller;
 
+import coupon.coupon.coupon.dto.coupon.CouponFindDto;
 import coupon.coupon.coupon.dto.coupon.CouponRequestDto;
 import coupon.coupon.coupon.dto.coupon.CouponResponseDto;
 import coupon.coupon.coupon.service.CouponService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,15 @@ import java.util.List;
 public class CouponController {
 
     private final CouponService couponService;
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CouponResponseDto>> getAllCouponsPage(
+            @ModelAttribute CouponFindDto couponFindDto,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+        Page<CouponResponseDto> result = couponService.getAllCouponsPage(couponFindDto, page, size);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @GetMapping("")
     public ResponseEntity<List<CouponResponseDto>> getAllCoupons(@RequestParam(value = "codeType", required = false, defaultValue = "") String codeType) {
