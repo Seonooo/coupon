@@ -15,7 +15,9 @@ coupon CRUD
 >   - 스프링에서 구현해놓은 EntityListner
 >   - 사용을 위해서 어플리케이션 구동 클래스에  @EnableJpaAuditing필요
 >   - @CreatedBy(작성자) , @CreatedDate(작성일) @LastModifiedDate(수정일) @LastModifiedBy(수정자) 등 사용가능.
-
+> - PageableExecutionUtils
+>   - ![img_1.png](img_1.png)
 
 ### Reference
 - https://ugo04.tistory.com/102
+- https://junior-datalist.tistory.com/342
