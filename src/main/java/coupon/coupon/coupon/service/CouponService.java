@@ -1,6 +1,7 @@
 package coupon.coupon.coupon.service;
 
 import coupon.coupon.coupon.dto.coupon.CouponFindDto;
+import coupon.coupon.coupon.dto.coupon.CouponPageResponse;
 import coupon.coupon.coupon.dto.coupon.CouponRequestDto;
 import coupon.coupon.coupon.dto.coupon.CouponResponseDto;
 import coupon.coupon.coupon.entity.Coupon;
@@ -24,11 +25,23 @@ public class CouponService {
 
     private final CouponRepository couponRepository;
 
-    public Page<CouponResponseDto> getAllCouponsPage(CouponFindDto couponFindDto, Integer page, Integer size) {
+    public CouponPageResponse getAllCouponsPage(CouponFindDto couponFindDto, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return couponRepository
-                .getAllCouponsPage(couponFindDto, pageable)
-                .map(Coupon::toResponse);
+        Page<Coupon> couponPage = couponRepository
+                .getAllCouponsPage(couponFindDto, pageable);
+        return getCouponPage(couponPage);
+
+    }
+
+    private CouponPageResponse getCouponPage(Page<Coupon> couponPage) {
+        return CouponPageResponse.builder()
+                .size(couponPage.getSize())
+                .couponList(couponPage.getContent().stream().map(Coupon::toResponse).collect(Collectors.toList()))
+                .page(couponPage.getNumber())
+                .totalCount(couponPage.getTotalPages())
+                .prev(!couponPage.isFirst())
+                .next(!couponPage.isLast())
+                .build();
     }
 
     public List<CouponResponseDto> getAllCoupons(String codeType) {
